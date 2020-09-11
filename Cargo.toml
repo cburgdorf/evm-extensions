@@ -1,0 +1,38 @@
+
+[package]
+name = "evm-extensions"
+version = "0.1.0"
+authors = ["Christoph Burgdorf <christoph.burgdorf@gmail.com>"]
+edition = "2018"
+description = "Python RLP serialization/deserialization based on a rapid fast Rust implementation."
+homepage = "https://github.com/cburgdorf/evm-extensions"
+repository = "https://github.com/cburgdorf/evm-extensions"
+readme = "README.md"
+license = "MIT"
+
+[package.metadata.maturin]
+classifier = [
+  "Intended Audience :: Developers",
+  "Programming Language :: Rust",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.5",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+]
+
+[lib]
+name = "evm_extensions"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies.pyo3]
+version = "0.11.1"
+features = ["extension-module"]
+
+[dev-dependencies]
+rstest = "0.6.4"
+hex-literal = "0.3.0"
+hex = "0.4.2"
+bytes = "0.5.6"
