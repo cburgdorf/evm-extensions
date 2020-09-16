@@ -1,5 +1,5 @@
 extern crate evm_extensions;
-use evm_extensions::Stack;
+use evm_extensions::CodeStream;
 
 // //use rstest::rstest;
 // //use stack::Stack;
@@ -14,9 +14,11 @@ use evm_extensions::Stack;
 // //     ]),
 // // )]
 #[test]
-fn encode_bytes() {
-    let mut stack = Stack::new();
-    stack.push_int(1);
-    let val = stack.pop1_int().unwrap();
-    assert_eq!(val, 1)
+fn test_is_valid_opcode_invalidates_bytes_after_PUSHXX_opcodes() {
+    let mut stream = CodeStream::new(vec![2, 96, 2, 4]);
+    assert_eq!(stream.is_valid_opcode(0), true);
+    assert_eq!(stream.is_valid_opcode(1), true);
+    assert_eq!(stream.is_valid_opcode(2), false);
+    assert_eq!(stream.is_valid_opcode(3), true);
+    assert_eq!(stream.is_valid_opcode(4), false);
 }

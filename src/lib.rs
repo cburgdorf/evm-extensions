@@ -1,12 +1,11 @@
 use pyo3::prelude::*;
 
-mod stack;
-pub use stack::Stack;
-
+mod code_stream;
+pub use code_stream::CodeStream;
 
 #[pymodule]
 fn evm_extensions(_py: Python, module: &PyModule) -> PyResult<()> {
-    module.add_class::<Stack>()?;
+    module.add_class::<CodeStream>()?;
 
     Ok(())
 }
