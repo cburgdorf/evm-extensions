@@ -26,20 +26,14 @@ lint:
 .ONESHELL:
 test: develop
 	. venv/bin/activate
-	python -m pytest -vv -s python-tests/
+	python -m pytest -vv -k 'not test_bench' -s python-tests/
 
 .PHONY: benchmark
 .ONESHELL:
 benchmark: venv
 	. venv/bin/activate
-	rm -rf target/release/evm_extensions.so
-	cargo build --release
-	cp target/release/libevm_extensions.so target/release/evm_extensions.so
-	echo "EVM EXTENSIONS: PUSH_POP"
-	python -m timeit -n 300 -u msec  -s'import benchmark' 'benchmark.bench_push_pop()'
-	echo "PY-EVM (NOT THIS LIBRARY): PUSH_POP"
-	python -m timeit -n 300 -u msec  -s'import benchmark' 'benchmark.bench_pyevm_push_pop()'
-
+	maturin develop --release
+	python -m pytest --benchmark-group-by=param:test_fn -vv -s python-tests/
 
 .PHONY: build
 .ONESHELL:
